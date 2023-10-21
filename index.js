@@ -16,6 +16,7 @@ let tasks = [
 
 // --- Create Operations (POST) ---
 
+// POST request to create a new task with the text given in the request
 app.post('/tasks', (req, res) => {
     const task = {
         id: tasks.length + 1,
@@ -30,18 +31,35 @@ app.post('/tasks', (req, res) => {
 
 // --- Read operations (GET) ---
 
+// GET request to get all tasks in the tasks array
 app.get('/tasks', (req, res) => {
-    res.json(tasks) // If we make a GET request to our localhost:3000/tasks, we should get the complete list of tasks
+    res.json(tasks) 
 })
 
+// GET request to get the task with the specified id
 app.get('/tasks/:id', (req, res) => {
     const task = tasks.find(t => t.id === parseInt(req.params.id));
     if(!task) return res.status(404).send('Task not found');
     res.json(task);
 })
 
-
 // --- Read operations (GET) ---
+
+
+
+
+// --- Update Operations (PUT) ---
+
+// Update the name of the task that has the given id with the name specificed in the request body.
+app.put('/tasks/:id', (req, res) => {
+    const task = tasks.find(t => t.id === parseInt(req.params.id));
+    if(!task) return res.status(404).send('Task not found');
+    
+    task.name = req.body.name;
+    res.json(task);
+})
+
+// --- Update Operations (PUT) ---
 
 
 
