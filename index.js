@@ -13,7 +13,22 @@ let tasks = [
     {id: 2, name: 'Take dog to the vet'},
 ];
 
-// --- Read operations ---
+
+// --- Create Operations (POST) ---
+
+app.post('/tasks', (req, res) => {
+    const task = {
+        id: tasks.length + 1,
+        name: req.body.name,
+    };
+    tasks.push(task);
+    res.json(task);
+})
+
+// --- Create Operations (POST) ---
+
+
+// --- Read operations (GET) ---
 
 app.get('/tasks', (req, res) => {
     res.json(tasks) // If we make a GET request to our localhost:3000/tasks, we should get the complete list of tasks
@@ -26,7 +41,9 @@ app.get('/tasks/:id', (req, res) => {
 })
 
 
-// --- Read operations ---
+// --- Read operations (GET) ---
+
+
 
 
 
