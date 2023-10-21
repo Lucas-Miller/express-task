@@ -14,7 +14,7 @@ let tasks = [
 ];
 
 
-// --- Create Operations (POST) ---
+// --- (POST) Create Operations ---
 
 // POST request to create a new task with the text given in the request
 app.post('/tasks', (req, res) => {
@@ -26,10 +26,10 @@ app.post('/tasks', (req, res) => {
     res.json(task);
 })
 
-// --- Create Operations (POST) ---
+// --- (POST) Create Operations ---
 
 
-// --- Read operations (GET) ---
+// --- (GET) Read operations ---
 
 // GET request to get all tasks in the tasks array
 app.get('/tasks', (req, res) => {
@@ -43,12 +43,12 @@ app.get('/tasks/:id', (req, res) => {
     res.json(task);
 })
 
-// --- Read operations (GET) ---
+// --- (GET) Read operations ---
 
 
 
 
-// --- Update Operations (PUT) ---
+// --- (PUT) Update Operations ---
 
 // Update the name of the task that has the given id with the name specificed in the request body.
 app.put('/tasks/:id', (req, res) => {
@@ -59,9 +59,44 @@ app.put('/tasks/:id', (req, res) => {
     res.json(task);
 })
 
-// --- Update Operations (PUT) ---
+// --- (PUT) Update Operations  ---
 
 
+// --- (PATCH) Update Operations ---
+
+// Update any of the properties given in the request
+// *Note: This is just an example and in practice this
+//        would be role protected to an admin role.
+app.patch('/tasks/:id', (req, res) => {
+    const task = tasks.find(t => t.id === parseInt(req.params.id));
+    if(!task) return res.status(404).send('Task not found');
+    
+    if(req.body.name) {
+        task.name = req.body.name;
+    }
+
+    if(req.body.id) {
+        task.id = req.body.id;
+    }
+
+    res.json(task);
+})
+
+// --- (PATCH) Update Operations  ---
+
+// --- (DELETE) Delete Operations ---
+
+app.delete('/tasks/:id', (req, res) => {
+    const task = tasks.find(t => t.id === parseInt(req.params.id));
+    if(!task) return res.status(404).send('Task not found');
+
+    const index = tasks.indexOf(task);
+    tasks.splice(index, 1);
+
+    res.json(task);
+})
+
+// --- (DELETE) Delete Operations ---
 
 
 
